@@ -14,7 +14,7 @@
 
   tasks:
   - name: create ec2 isntances
-    amazon.aws.ec2-isntances:
+    amazon.aws.ec2_isntances:
      name: "{{ item}}"
      instance_type: t3.micro
      security_group: "{{ sg_id }}"
@@ -25,7 +25,7 @@
     loop: "{{instances}}"
 
     register: ec2-output
-    
+
   - name: print the ec2_output
     ansible.builtin.debug:
       msg: "{{ ec2_output }}"
