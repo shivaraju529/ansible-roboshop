@@ -14,7 +14,7 @@
 
   tasks:
   - name: create ec2 isntances
-    amazon.aws.ec2_isntances:
+    amazon.aws.ec2_isntance:
      name: "{{ item}}"
      instance_type: t3.micro
      security_group: "{{ sg_id }}"
