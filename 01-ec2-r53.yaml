@@ -1,0 +1,5 @@
+- name: create ec2user and update route 53
+  hosts: local
+  connection: local
+  tasks:
+   
