@@ -26,13 +26,14 @@
     ansible.builtin.file:
        state: directory
        directory: /app
+
   - name: download catalogue Application
     ansible.builtin.get_url:
       url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
-      dest: tmp/catalogue.zip
+      dest: /tmp/catalogue.zip
 
   - name: Unarchive a file that is already on the remote machine
     ansible.builtin.unarchive:
-      src: tmp/catalogue.zip
+      src: /tmp/catalogue.zip
       dest: /app
       remote_src: yes
