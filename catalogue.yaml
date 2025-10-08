@@ -11,13 +11,28 @@
   
   - name: install nodejs
     ansible.builtin.package:
-     name: catalogue
-     state: present
+      name: catalogue
+      state: present
   
   - name: create roboshop system user
     ansible.builtin.user:
-     name: roboshop
-     comment: roboshop system user
-     system: true
-     shell: /sbin/nologin
-     home: /app
+      name: roboshop
+      comment: roboshop system user
+      system: true
+      shell: /sbin/nologin
+      home: /app
+
+  - name : create app directory
+    ansible.builtin.file:
+       state: directory
+       directory: /app
+  - name: download catalogue Application
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+      dest: tmp/catalogue.zip
+
+  - name: Unarchive a file that is already on the remote machine
+    ansible.builtin.unarchive:
+      src: tmp/catalogue.zip
+      dest: /app
+      remote_src: yes
