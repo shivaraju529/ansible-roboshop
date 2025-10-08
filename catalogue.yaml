@@ -37,3 +37,46 @@
       src: /tmp/catalogue.zip
       dest: /app
       remote_src: yes
+
+  - name: Install npom node.js package.
+    community.general.npm:
+      path: /app
+
+  - name: copy catalogue service
+    ansible.builtin.copy:
+     src: catalogue.service
+     dest: /etc/systemd/system/catalogue.service
+
+  - name: copy mongo repo
+    ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+  - name: install mongodb client
+    ansible.builtin.package:
+      name: mongodb-mongosh
+      state: present
+  
+  - name: connnect to mongodb catalogue
+    ansible.builtin.command: mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
+    register: catalogue_output
+  
+  - name: load products into mongodb
+    ansible.builtin.shell: mongosh --host mongodb.daws86s.fun </app/db/master-data.js
+    when: catalogue_output.stdout | int < 0
+
+  - name: start and enable cataalogue
+    ansible.builtin.service:
+      name: catalogue
+      enabled: yes
+      state: started
+
+  - name: 
+    ansible.builtin.systemd_service:
+      name: catalogue
+      enabled: true
+      state: started
+      daemon_reload: true
+      
+
+      
