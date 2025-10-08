@@ -65,7 +65,7 @@
         - mysql
         - rabbitmq
 
-    tasks:
+      tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
       name: "{{ item }}"
