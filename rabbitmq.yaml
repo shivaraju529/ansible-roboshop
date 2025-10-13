@@ -21,7 +21,7 @@
 
   - name: create and provide permission to user
     community.rabbitmq.rabbitmq_user:
-      user: joeroboshop
+      user: roboshop
       password: roboshop123
       permissions:
         - vhost: /
